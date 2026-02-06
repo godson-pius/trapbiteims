@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fdfcfb;
+  --foreground: #2d1b0d;
+  --card: #ffffff;
+  --card-foreground: #2d1b0d;
+  --popover: #ffffff;
+  --popover-foreground: #2d1b0d;
+  --primary: #f05a28; /* Warm Shawarma Orange */
+  --primary-foreground: #ffffff;
+  --secondary: #fef3e2; /* Light Amber */
+  --secondary-foreground: #7d4a1a;
+  --muted: #f5f0eb;
+  --muted-foreground: #7d6b5e;
+  --accent: #f05a28;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e9e1d8;
+  --input: #e9e1d8;
+  --ring: #f05a28;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: #1a0f08;
+  --foreground: #f5f0eb;
+  --card: #2d1b0d;
+  --card-foreground: #f5f0eb;
+  --popover: #2d1b0d;
+  --popover-foreground: #f5f0eb;
+  --primary: #f05a28;
+  --primary-foreground: #ffffff;
+  --secondary: #3d2618;
+  --secondary-foreground: #fdfcfb;
+  --muted: #3d2618;
+  --muted-foreground: #a69082;
+  --accent: #f05a28;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #3d2618;
+  --input: #3d2618;
+  --ring: #f05a28;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(45, 27, 13, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
