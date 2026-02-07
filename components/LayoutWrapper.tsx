@@ -1,11 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { Menu, Store } from "lucide-react";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const pathname = usePathname();
+    const isLoginPage = pathname === "/login";
+
+    if (isLoginPage) {
+        return <>{children}</>;
+    }
 
     return (
         <div className="flex min-h-screen bg-background w-full">

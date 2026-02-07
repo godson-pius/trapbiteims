@@ -11,10 +11,12 @@ import {
     Settings,
     Store,
     X,
-    HandCoins
+    HandCoins,
+    LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/' },
@@ -32,6 +34,17 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            router.push('/login');
+            router.refresh();
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
 
     const SidebarContent = (
         <div className="flex flex-col h-full w-64 bg-card border-r border-border shadow-2xl lg:shadow-none">
@@ -75,7 +88,15 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 })}
             </nav>
 
-            <div className="p-4 border-t border-border">
+            <div className="p-4 border-t border-border space-y-2">
+                <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-xl transition-all font-bold text-sm"
+                >
+                    <LogOut size={20} />
+                    <span>Sign Out</span>
+                </button>
+
                 <div className="p-4 bg-secondary/50 rounded-2xl space-y-2">
                     <p className="text-[10px] font-black text-primary uppercase tracking-widest">Business Info</p>
                     <div className="text-[11px] text-muted-foreground leading-relaxed font-medium">
@@ -85,7 +106,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </div>
             </div>
 
-            <div className="p-4">
+            <div className="p-4 pb-8">
                 <button className="flex items-center gap-3 px-4 py-3 w-full text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all font-bold text-sm">
                     <Settings size={20} />
                     <span>Settings</span>
