@@ -5,6 +5,7 @@ const SaleSchema = new Schema({
     productName: { type: String, required: true },
     quantity: { type: Number, required: true },
     total: { type: Number, required: true },
+    paymentMethod: { type: String, required: true, enum: ['Cash', 'Transfer'] },
     date: { type: Date, default: Date.now },
 }, {
     timestamps: true,

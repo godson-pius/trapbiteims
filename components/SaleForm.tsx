@@ -58,6 +58,7 @@ export default function SaleForm({ onSuccess, onCancel }: SaleFormProps) {
             productName: product.name,
             quantity,
             total: product.price * quantity,
+            paymentMethod: formData.get('paymentMethod'),
             date: new Date().toISOString(),
         };
 
@@ -112,6 +113,37 @@ export default function SaleForm({ onSuccess, onCancel }: SaleFormProps) {
                     className="w-full px-4 py-3 bg-muted/30 border border-border rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium"
                     placeholder="Enter quantity"
                 />
+            </div>
+
+            <div className="space-y-2">
+                <label className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Payment Method</label>
+                <div className="grid grid-cols-2 gap-3">
+                    <label className="cursor-pointer">
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="Cash"
+                            required
+                            className="peer hidden"
+                            defaultChecked
+                        />
+                        <div className="flex items-center justify-center gap-2 p-3 bg-muted/30 border border-border rounded-xl font-bold text-sm text-muted-foreground peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:border-primary transition-all">
+                            Cash
+                        </div>
+                    </label>
+                    <label className="cursor-pointer">
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="Transfer"
+                            required
+                            className="peer hidden"
+                        />
+                        <div className="flex items-center justify-center gap-2 p-3 bg-muted/30 border border-border rounded-xl font-bold text-sm text-muted-foreground peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:border-primary transition-all">
+                            Transfer
+                        </div>
+                    </label>
+                </div>
             </div>
 
             {error && (

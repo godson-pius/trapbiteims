@@ -21,7 +21,7 @@ import {
   Cell
 } from 'recharts';
 import { Product, Sale, Expense } from '@/lib/data';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatDateTime } from '@/lib/utils';
 import Modal from '@/components/Modal';
 import SaleForm from '@/components/SaleForm';
 
@@ -167,7 +167,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="font-medium text-sm">{sale.productName}</p>
-                    <p className="text-xs text-muted-foreground">{new Date(sale.date).toLocaleDateString()}</p>
+                    <p className="text-xs text-muted-foreground">{formatDateTime(sale.date)}</p>
                   </div>
                 </div>
                 <div className="text-right">

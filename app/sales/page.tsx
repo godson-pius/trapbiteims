@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ShoppingCart, Plus, Search, Calendar, Download, Loader2, Trash2, X } from 'lucide-react';
 import { DataTable, Column } from '@/components/DataTable';
 import { Sale } from '@/lib/data';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatDateTime } from '@/lib/utils';
 import Modal from '@/components/Modal';
 import SaleForm from '@/components/SaleForm';
 
@@ -70,8 +70,23 @@ export default function SalesPage() {
             )
         },
         {
+            header: 'Payment',
+            accessorKey: (s: Sale) => (
+                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${s.paymentMethod === 'Cash'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-blue-100 text-blue-700'
+                    }`}>
+                    {s.paymentMethod}
+                </span>
+            )
+        },
+        {
             header: 'Date',
-            accessorKey: (s: Sale) => new Date(s.date).toLocaleDateString()
+            accessorKey: (s: Sale) => (
+                <div className="flex flex-col">
+                    <span className="font-bold text-foreground">{formatDateTime(s.date)}</span>
+                </div>
+            )
         },
         {
             header: 'Actions',

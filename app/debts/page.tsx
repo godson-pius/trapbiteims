@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { HandCoins, Plus, Search, Calendar, Loader2, Trash2, CheckCircle2, AlertCircle, X } from 'lucide-react';
 import { DataTable, Column } from '@/components/DataTable';
 import { Debt } from '@/lib/data';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatDateTime } from '@/lib/utils';
 import Modal from '@/components/Modal';
 import DebtForm from '@/components/DebtForm';
 
@@ -100,13 +100,21 @@ export default function DebtsPage() {
             )
         },
         {
+            header: 'Recorded',
+            accessorKey: (d: Debt) => (
+                <div className="flex flex-col">
+                    <span className="font-bold text-foreground">{formatDateTime(d.date)}</span>
+                </div>
+            )
+        },
+        {
             header: 'Status',
             accessorKey: (d: Debt) => (
                 <button
                     onClick={() => handleToggleStatus(d.id, d.status)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase transition-all ${d.status === 'Paid'
-                            ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                            : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
+                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                        : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
                         }`}
                 >
                     {d.status === 'Paid' ? <CheckCircle2 size={12} /> : <AlertCircle size={12} />}

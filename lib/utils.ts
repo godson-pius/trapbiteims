@@ -11,3 +11,10 @@ export function formatCurrency(amount: number) {
     currency: 'NGN',
   }).format(amount);
 }
+
+export function formatDateTime(date: string | Date) {
+  return new Intl.DateTimeFormat('en-NG', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(date));
+}

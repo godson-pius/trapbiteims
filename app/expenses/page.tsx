@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Receipt, Plus, Search, Filter, Loader2, Trash2, X, Calendar } from 'lucide-react';
+import { Receipt, Plus, Search, Filter, Loader2, Edit2, Trash2, X, Calendar } from 'lucide-react';
 import { DataTable, Column } from '@/components/DataTable';
 import { Expense } from '@/lib/data';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatDateTime } from '@/lib/utils';
 import Modal from '@/components/Modal';
 import ExpenseForm from '@/components/ExpenseForm';
 
@@ -14,6 +14,7 @@ export default function ExpensesPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filterDate, setFilterDate] = useState('');
     const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+    const [editingExpense, setEditingExpense] = useState<Expense | undefined>(undefined);
 
     useEffect(() => {
         fetchExpenses();
@@ -73,18 +74,34 @@ export default function ExpensesPage() {
         },
         {
             header: 'Date',
-            accessorKey: (e: Expense) => new Date(e.date).toLocaleDateString()
+            accessorKey: (e: Expense) => (
+                <div className="flex flex-col">
+                    <span className="font-bold text-foreground">{formatDateTime(e.date)}</span>
+                </div>
+            )
         },
         {
             header: 'Actions',
             accessorKey: (e: Expense) => (
-                <button
-                    onClick={() => handleDeleteExpense(e.id)}
-                    className="p-2 hover:bg-red-50 rounded-xl text-muted-foreground hover:text-red-500 transition-colors"
-                    title="Delete Record"
-                >
-                    <Trash2 size={16} />
-                </button>
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={() => {
+                            setEditingExpense(e);
+                            setIsExpenseModalOpen(true);
+                        }}
+                        className="p-2 hover:bg-muted rounded-xl text-muted-foreground hover:text-primary transition-colors"
+                        title="Edit Record"
+                    >
+                        <Edit2 size={16} />
+                    </button>
+                    <button
+                        onClick={() => handleDeleteExpense(e.id)}
+                        className="p-2 hover:bg-red-50 rounded-xl text-muted-foreground hover:text-red-500 transition-colors"
+                        title="Delete Record"
+                    >
+                        <Trash2 size={16} />
+                    </button>
+                </div>
             )
         }
     ];
@@ -179,15 +196,23 @@ export default function ExpensesPage() {
 
             <Modal
                 isOpen={isExpenseModalOpen}
-                onClose={() => setIsExpenseModalOpen(false)}
-                title="REGISTER BUSINESS EXPENSE"
+                onClose={() => {
+                    setIsExpenseModalOpen(false);
+                    setEditingExpense(undefined);
+                }}
+                title={editingExpense ? "EDIT EXPENSE RECORD" : "REGISTER BUSINESS EXPENSE"}
             >
                 <ExpenseForm
+                    initialData={editingExpense}
                     onSuccess={() => {
                         setIsExpenseModalOpen(false);
+                        setEditingExpense(undefined);
                         fetchExpenses();
                     }}
-                    onCancel={() => setIsExpenseModalOpen(false)}
+                    onCancel={() => {
+                        setIsExpenseModalOpen(false);
+                        setEditingExpense(undefined);
+                    }}
                 />
             </Modal>
         </div>

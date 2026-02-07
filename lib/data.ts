@@ -13,6 +13,7 @@ export type Sale = {
     productName: string;
     quantity: number;
     total: number;
+    paymentMethod: 'Cash' | 'Transfer';
     date: string;
 };
 
@@ -42,9 +43,9 @@ export const MOCK_PRODUCTS: Product[] = [
 ];
 
 export const MOCK_SALES: Sale[] = [
-    { id: '1', productId: '1', productName: 'Shawarma', quantity: 2, total: 5000, date: '2026-02-06' },
-    { id: '2', productId: '2', productName: 'Zobo Drink', quantity: 5, total: 2500, date: '2026-02-06' },
-    { id: '3', productId: '1', productName: 'Shawarma', quantity: 1, total: 2500, date: '2026-02-05' },
+    { id: '1', productId: '1', productName: 'Shawarma', quantity: 2, total: 5000, paymentMethod: 'Cash', date: '2026-02-06' },
+    { id: '2', productId: '2', productName: 'Zobo Drink', quantity: 5, total: 2500, paymentMethod: 'Transfer', date: '2026-02-06' },
+    { id: '3', productId: '1', productName: 'Shawarma', quantity: 1, total: 2500, paymentMethod: 'Cash', date: '2026-02-05' },
 ];
 
 export const MOCK_EXPENSES: Expense[] = [
